@@ -1,49 +1,48 @@
-#include <iostream>
-using namespace std;
+def fibonacci_recursive(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
 
-int fibonacci(int n){
-    if (n <= 1)
-        return n;
-    return fibonacci(n - 1) + fibonacci(n - 2);
-}
-
-int main() {
-    int n;
-
-    cout << "Enter number of terms in the series: ";
-    cin >> n;
-
-    cout << "Fibonacci Series: ";
-    for (int i = 0; i < n; i++) {
-        cout << fibonacci(i) << " ";
-    }
-
-    return 0;
-}
+# Ask the user for the number of terms
+n = int(input("Enter the number of terms in the Fibonacci series: "))
+if n <= 0:
+    print("Please enter a positive integer.")
+else:
+    for i in range(n):
+        print(fibonacci_recursive(i), end=" ")    
 
 
-#include <iostream>
-using namespace std;
 
-int main() {
-    int n;
-    cout << "Enter the number of terms you want in the Fibonacci series: ";
-    cin >> n;
+def fibonacci_iterative(n):
+    fib_series = [0, 1]
+    while len(fib_series) < n:
+        next_term = fib_series[-1] + fib_series[-2]
+        fib_series.append(next_term)
+    return fib_series
+# Ask the user for the number of terms
+n = int(input("Enter the number of terms in the Fibonacci series: "))
+if n <= 0:
+    print("Please enter a positive integer.")
+else:
+    fib_series = fibonacci_iterative(n)
+    print(fib_series)
 
-    int first = 0, second = 1, next;
 
-    cout << "Fibonacci Series without Recursion: ";
+n = int(input("Enter the number of terms you want in the Fibonacci series: "))
+first, second = 0, 1
+print("Fibonacci Series without Recursion:", end=" ")
 
-    for (int i = 0; i < n; i++) {
-        if (i <= 1) {
-            next = i;
-        } else {
-            next = first + second;
-            first = second;
-            second = next;
-        }
-        cout << next << " ";
-    }
+for i in range(n):
+    if i <= 1:
+        next = i
+    else:
+        next = first + second
+        first, second = second, next
+    print(next, end=" ")
 
-    return 0;
-}
+print()
+
+

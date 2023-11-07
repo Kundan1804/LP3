@@ -29,10 +29,10 @@ data.isnull().sum()
 data.pickup_datetime=pd.to_datetime(data.pickup_datetime, errors='coerce')
 
 data= data.assign(hour = data.pickup_datetime.dt.hour,
-             day= data.pickup_datetime.dt.day,
-             month = data.pickup_datetime.dt.month,
-             year = data.pickup_datetime.dt.year,
-             dayofweek = data.pickup_datetime.dt.dayofweek)
+        day= data.pickup_datetime.dt.day,
+        month = data.pickup_datetime.dt.month,
+        year = data.pickup_datetime.dt.year,
+        dayofweek = data.pickup_datetime.dt.dayofweek)
 
 data=data.drop(['pickup_datetime'], axis=1)
 

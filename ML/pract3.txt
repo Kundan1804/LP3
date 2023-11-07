@@ -28,6 +28,8 @@ pipe = Pipeline(operations)
 
 from sklearn.model_selection import GridSearchCV
 k_values = list(range(1, 20))
+or
+k_values = 5
 
 param_grid = {'knn__n_neighbors':k_values}
 

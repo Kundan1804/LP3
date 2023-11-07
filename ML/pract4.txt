@@ -74,6 +74,8 @@ plt.ylabel('Truth')
 
 print(classification_report(y_test,y_pred))
 
+
+//yaha se last tak ni karna hai
 new_customer = [[0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]]
 new_customer = sc.transform(sc.transform(new_customer))
 

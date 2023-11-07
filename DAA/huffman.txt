@@ -37,3 +37,51 @@ if __name__ == "__main__":
 
     root = build_huffman_tree(chars, freq)
     print_huffman_codes(root)
+
+#Huffman Encoding
+class node:
+    def _init_(self,freq,symbol,left=None, right=None):
+        self.freq=freq
+        self.symbol=symbol
+        self.left=left
+        self.right=right
+        self.huff=''
+    def _lt_(self,nxt):
+        self.freq<nxt.freq
+        
+def print_node(node,val=''):
+    newval=val+str(node.huff)
+    if node.left:
+        print_node(node.left,newval)
+    if node.right:
+        print_node(node.right,newval)
+    if not node.left and not node.right:
+        print('{}->{}'.format(node.symbol,newval))
+
+n=int(input("Enter the no. of items"))
+char=[]
+for i in range(n):
+    e=input("Enter the char")
+    char.append(e)
+print()
+freq=[]
+for i in range(n):
+    e=int(input("Enter thr frequency"))
+    freq.append(e)
+nodes=[]
+print()
+for i in range(n):
+    heapq.heappush(nodes,node(freq[i],char[i]))
+    
+while len(nodes)>1:
+    left=heapq.heappop(nodes)
+    right=heapq.heappop(nodes)
+    
+    left.huff=0
+    right.huff=1
+       
+    newnode=node(left.freq+right.freq, left.symbol+right.symbol,left,right)
+    
+    heapq.heappush(nodes,newnode)
+    
+print_node(nodes[0])
