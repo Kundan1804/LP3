@@ -38,6 +38,13 @@ if __name__ == "__main__":
     root = build_huffman_tree(chars, freq)
     print_huffman_codes(root)
 
+
+
+
+
+
+
+
 #Huffman Encoding
 class node:
     def _init_(self,freq,symbol,left=None, right=None):

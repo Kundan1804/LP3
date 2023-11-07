@@ -1,0 +1,52 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.cluster import KMeans
+
+df=pd.read_csv("sales_data_sample.csv", encoding="unicode_escape")
+
+df.head()
+df.columns
+
+df.drop(['ORDERNUMBER', 'ORDERDATE',  'CUSTOMERNAME', 'PHONE','ADDRESSLINE1', 'ADDRESSLINE2', 'CITY', 'STATE', 'POSTALCODE','STATUS', 'QTR_ID','TERRITORY', 'CONTACTLASTNAME', 'CONTACTFIRSTNAME'], axis=1, inplace=True)
+df.head()
+
+le=LabelEncoder()
+df['PRODUCTLINE']=le.fit_transform(df['PRODUCTLINE'])
+df['PRODUCTCODE']=le.fit_transform(df['PRODUCTCODE'])
+df['COUNTRY']=le.fit_transform(df['COUNTRY'])
+df['DEALSIZE']=le.fit_transform(df['DEALSIZE'])
+
+df.head()
+column_names = df.columns  
+
+sc=StandardScaler()
+df=sc.fit_transform(df)
+
+score=[]
+for i in range(1,15):
+    kmeans=KMeans(n_clusters=i)
+    kmeans.fit(df)
+    score.append(kmeans.inertia_)
+
+plt.plot(score, 'bx-')
+
+kmeans=KMeans(4)
+model=kmeans.fit(df)
+
+label=kmeans.labels_
+label
+
+kmeans.cluster_centers_.shape
+
+cc = pd.DataFrame(kmeans.cluster_centers_, columns=column_names)
+
+cc=sc.inverse_transform(cc)
+cc = pd.DataFrame(cc, columns=column_names)
+cc
+
+df = pd.DataFrame(df)
+sales_of_cluster = pd.concat([df, pd.DataFrame({'cluster': label})], axis=1)
+sales_of_cluster.head()
+

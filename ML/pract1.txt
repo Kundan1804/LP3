@@ -105,6 +105,7 @@ RMSE = np.sqrt(MSE)
 RMSE
 
 from sklearn.ensemble import RandomForestRegressor
+rf = RandomForestRegressor(n_estimators=100) 
 rf.fit(X_train,y_train)
 pred = rf.predict(X_test)
 pred

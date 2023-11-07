@@ -1,0 +1,47 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import Dense
+from sklearn.metrics import classification_report, confusion_matrix
+
+df=pd.read_csv("Churn_Modelling.csv")
+df.head()
+df.columns
+df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1,inplace=True)
+
+df.head()
+
+le=LabelEncoder()
+df['Geography']=le.fit_transform(df['Geography'])
+df['Gender']=le.fit_transform(df['Gender'])
+
+df.head()
+
+x=df.drop(['Exited'], axis=1)
+y=df['Exited']
+
+s=StandardScaler()
+x=s.fit_transform(df)
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3)
+
+classifier=Sequential()
+
+classifier.add(Dense(activation="relu", input_dim=10, units=6, kernel_initializer="uniform"))
+classifier.add(Dense(activation="relu",  units=6, kernel_initializer="uniform"))
+classifier.add(Dense(activation="sigmoid", units=1, kernel_initializer="uniform"))
+classifier.compile(optimizer="adam", loss="binary_crossentropy", metrics=['accuracy'])
+classifier.summary()
+
+classifier.fit(x_train,y_train, epochs=50, batch_size=10)
+
+y_pred=classifier.predict(x_test)
+y_pred
+
+y_pred=np.where(y_pred<0.5,0,1)
+y_pred       
+
+print(classification_report(y_test,y_pred))
+print(confusion_matrix(y_test,y_pred))
